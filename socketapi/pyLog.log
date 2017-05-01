@@ -1,0 +1,169 @@
+2017-04-30 13:32:37.549881 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 13:36:39.006743 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 13:36:45.381615 ::INFO:: Request for robot Position
+2017-04-30 13:36:45.381615 ::INFO:: Sending message : Pos
+2017-04-30 13:36:45.406633 ::INFO:: Receive robot Position (0.0, 0.0, 0.0)
+2017-04-30 13:37:07.589700 ::INFO:: Request for robot Position
+2017-04-30 13:37:07.589700 ::INFO:: Sending message : Pos
+2017-04-30 13:37:07.591201 ::INFO:: Receive robot Position (0.0, 0.0, 0.0)
+2017-04-30 13:37:36.126718 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 13:37:50.917433 ::INFO:: Request for robot Position
+2017-04-30 13:37:50.917933 ::INFO:: Sending message : Pos
+2017-04-30 13:37:50.917933 ::ERROR:: Some error occurred when try to send 'Pos' request
+2017-04-30 13:37:50.937448 ::ERROR:: [WinError 10038] 嘗試操作的對象不是通訊端。
+2017-04-30 13:39:37.918522 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 13:39:42.085824 ::INFO:: Request for robot Position
+2017-04-30 13:39:42.085824 ::INFO:: Sending message : Pos
+2017-04-30 13:39:42.092831 ::INFO:: Receive robot Position (0.0, 0.0, 0.0)
+2017-04-30 13:42:29.118962 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 13:42:33.077874 ::INFO:: Request for robot Position
+2017-04-30 13:42:33.077874 ::INFO:: Sending message : Pos
+2017-04-30 13:42:33.081893 ::INFO:: Receive robot Position (-5.480096817016602, 3.632999897003174, -2.5769758224487305)
+2017-04-30 13:42:49.494055 ::INFO:: Request for robot Position
+2017-04-30 13:42:49.494055 ::INFO:: Sending message : Pos
+2017-04-30 13:42:49.498074 ::INFO:: Receive robot Position (-5.480096817016602, 3.632999897003174, -2.5769758224487305)
+2017-04-30 13:43:28.085821 ::INFO:: Request for robot Position
+2017-04-30 13:43:28.086322 ::INFO:: Sending message : Pos
+2017-04-30 13:43:28.090325 ::INFO:: Receive robot Position (-13.211136817932129, 3.6545231342315674, -5.172374725341797)
+2017-04-30 13:44:19.134200 ::INFO:: Request for robot Position
+2017-04-30 13:44:19.134200 ::INFO:: Sending message : Pos
+2017-04-30 13:44:19.134701 ::ERROR:: Some error occurred when try to send 'Pos' request
+2017-04-30 13:44:19.135701 ::ERROR:: [WinError 10038] 嘗試操作的對象不是通訊端。
+2017-04-30 18:25:59.980451 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 18:27:16.428500 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 18:27:26.307419 ::INFO:: Request for robot Position
+2017-04-30 18:31:46.605130 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 18:32:03.259653 ::INFO:: Request for robot Position
+2017-04-30 18:32:03.260155 ::INFO:: Sending request: Pos / param= / evt=
+2017-04-30 18:32:27.541882 ::INFO:: Sending request: Close / param= / evt=
+2017-04-30 18:33:01.132980 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 18:33:05.387786 ::INFO:: Request for robot Position
+2017-04-30 18:33:05.388286 ::INFO:: Sending request: Pos / param= / evt=
+2017-04-30 18:33:05.394807 ::INFO:: Receive robot Position (-5.480096817016602, 3.632999897003174, -2.5769758224487305)
+2017-04-30 18:34:34.028870 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 18:34:37.315710 ::INFO:: Request for robot Position
+2017-04-30 18:34:37.316210 ::INFO:: Sending request: Pos / param= / evt=
+2017-04-30 18:34:37.320729 ::INFO:: Receive robot Position (-5.480096817016602, 3.632999897003174, -2.5769758224487305)
+2017-04-30 18:34:50.108190 ::INFO:: Sending request: Key / param=w / evt=Down
+2017-04-30 18:34:50.108190 ::INFO:: Event = KeyDown / Param = w
+2017-04-30 18:34:56.380271 ::INFO:: Sending request: Key / param=w / evt=Up
+2017-04-30 18:34:56.380271 ::INFO:: Event = KeyUp / Param = w
+2017-04-30 18:35:07.611860 ::INFO:: Sending request: Key / param=s / evt=Down
+2017-04-30 18:35:07.612360 ::INFO:: Event = KeyDown / Param = s
+2017-04-30 18:35:12.692387 ::INFO:: Sending request: Key / param=s / evt=Up
+2017-04-30 18:35:12.692387 ::INFO:: Event = KeyUp / Param = s
+2017-04-30 18:36:33.740204 ::INFO:: Request for First Person View
+2017-04-30 18:36:33.740204 ::INFO:: Sending request: FPS / param= / evt=
+2017-04-30 18:36:33.814926 ::INFO:: Request for First Person View 503797 bytes
+2017-04-30 18:36:33.816927 ::INFO:: Receive First Person View 503797 bytes
+2017-04-30 18:38:09.252533 ::INFO:: Sending request: Speed / param=2.5 / evt=
+2017-04-30 18:38:09.252533 ::INFO:: Event = SetSpeed / Param = 2.5
+2017-04-30 18:41:07.757177 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 18:41:15.260480 ::INFO:: Sending request: Speed / param=2.5 / evt=
+2017-04-30 18:41:15.260480 ::INFO:: Event = SetSpeed / Param = 2.5
+2017-04-30 18:41:28.652995 ::INFO:: Sending request: Speed / param=2.4 / evt=
+2017-04-30 18:41:28.652995 ::INFO:: Event = SetSpeed / Param = 2.4
+2017-04-30 18:43:23.782721 ::INFO:: Sending request: Close / param= / evt=
+2017-04-30 18:49:38.542249 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 18:50:20.621296 ::INFO:: Sending request: Speed / param=2.5 / evt=
+2017-04-30 18:50:20.621296 ::INFO:: Event = SetSpeed / Param = 2.5
+2017-04-30 18:50:40.317143 ::INFO:: Sending request: RSpeed / param=80.0 / evt=
+2017-04-30 18:50:40.317642 ::INFO:: Event = SetRotateSpeed / Param = 80.0
+2017-04-30 18:51:57.102677 ::INFO:: Sending request: Close / param= / evt=
+2017-04-30 18:52:15.374400 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 18:52:20.677905 ::INFO:: Sending request: Speed / param=2.5 / evt=
+2017-04-30 18:52:20.677905 ::INFO:: Event = SetSpeed / Param = 2.5
+2017-04-30 18:56:53.590579 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 18:56:59.349650 ::INFO:: Sending request: Speed / param=2.5 / evt=
+2017-04-30 18:56:59.349650 ::INFO:: Event = SetSpeed / Param = 2.5
+2017-04-30 18:57:45.446990 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 18:57:51.054003 ::INFO:: Sending request: Speed / param=2.5 / evt=
+2017-04-30 18:57:51.054003 ::INFO:: Event = SetSpeed / Param = 2.5
+2017-04-30 18:58:54.886775 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 18:58:59.093747 ::INFO:: Request for robot Position
+2017-04-30 18:58:59.094248 ::INFO:: Sending request: Pos / param= / evt=
+2017-04-30 19:01:25.582897 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 19:01:31.262269 ::INFO:: Request for robot Position
+2017-04-30 19:01:31.262269 ::INFO:: Sending request: Pos / param= / evt=
+2017-04-30 19:01:31.269292 ::INFO:: Receive robot Position (-5.480096817016602, 3.632999897003174, -2.5769758224487305)
+2017-04-30 19:01:36.470366 ::INFO:: Sending request: Speed / param=2.5 / evt=
+2017-04-30 19:01:36.470366 ::INFO:: Event = SetSpeed / Param = 2.5
+2017-04-30 19:01:47.558133 ::INFO:: Sending request: RSpeed / param=80.0 / evt=
+2017-04-30 19:01:47.558133 ::INFO:: Event = SetRotateSpeed / Param = 80.0
+2017-04-30 19:01:51.870209 ::INFO:: Sending request: RSpeed / param=80 / evt=
+2017-04-30 19:01:51.870209 ::INFO:: Event = SetRotateSpeed / Param = 80
+2017-04-30 19:01:55.598287 ::INFO:: Sending request: RSpeed / param=90 / evt=
+2017-04-30 19:01:55.598287 ::INFO:: Event = SetRotateSpeed / Param = 90
+2017-04-30 19:02:01.886095 ::INFO:: Request for robot Position
+2017-04-30 19:02:01.886095 ::INFO:: Sending request: Pos / param= / evt=
+2017-04-30 19:02:01.888097 ::INFO:: Receive robot Position (-5.480096817016602, 3.632999897003174, -2.5769758224487305)
+2017-04-30 19:02:15.981868 ::INFO:: Request for robot Position
+2017-04-30 19:02:15.982368 ::INFO:: Sending request: Pos / param= / evt=
+2017-04-30 19:02:15.983869 ::INFO:: Receive robot Position (-9.839835166931152, 3.6545231342315674, -4.246988773345947)
+2017-04-30 19:03:36.222905 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 19:03:48.079620 ::INFO:: Sending request: Close / param= / evt=
+2017-04-30 19:04:26.799202 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 19:04:43.814496 ::INFO:: Sending message : Hello~~
+2017-04-30 19:05:30.590865 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 19:05:36.886662 ::INFO:: Sending message : Hello~~~
+2017-04-30 19:06:35.711635 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 19:06:44.486545 ::INFO:: Sending message : Hello~~
+2017-04-30 19:07:59.967403 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 19:08:06.126477 ::INFO:: Sending message : Hello~~
+2017-04-30 19:08:34.318747 ::INFO:: Sending request: Close / param= / evt=
+2017-04-30 19:08:38.464530 ::INFO:: Sending request: Close / param= / evt=
+2017-04-30 19:10:20.407925 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-04-30 19:10:32.310696 ::INFO:: Request for robot Position
+2017-04-30 19:10:32.311195 ::INFO:: Sending request: Pos / param= / evt=
+2017-04-30 19:10:32.319730 ::INFO:: Receive robot Position (-5.480096817016602, 3.632999897003174, -2.5769758224487305)
+2017-04-30 19:10:39.800687 ::INFO:: Sending request: Close / param= / evt=
+2017-05-01 13:22:41.929172 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-05-01 13:22:54.751219 ::INFO:: Request for robot Position
+2017-05-01 13:22:54.751219 ::INFO:: Sending request: Pos / param= / evt=
+2017-05-01 13:22:54.761226 ::INFO:: Receive robot Position (-5.480096817016602, 3.6545233726501465, -2.0169758796691895)
+2017-05-01 13:23:01.630916 ::INFO:: Request for robot Rotation
+2017-05-01 13:23:01.630916 ::INFO:: Sending request: Rot / param= / evt=
+2017-05-01 13:23:01.650788 ::INFO:: Receive robot Rotation (-0.0, 72.00000762939453, 0.0)
+2017-05-01 13:23:37.424068 ::INFO:: Sending request: Close / param= / evt=
+2017-05-01 13:23:41.305320 ::INFO:: Sending request: Close / param= / evt=
+2017-05-01 13:24:13.484313 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-05-01 13:24:18.182945 ::INFO:: Request for robot Position
+2017-05-01 13:24:18.183447 ::INFO:: Sending request: Pos / param= / evt=
+2017-05-01 13:24:18.197454 ::INFO:: Receive robot Position (-5.480096817016602, 3.632999897003174, -2.5769758224487305)
+2017-05-01 13:24:22.727178 ::INFO:: Request for robot Rotation
+2017-05-01 13:24:22.727178 ::INFO:: Sending request: Rot / param= / evt=
+2017-05-01 13:24:22.733183 ::INFO:: Receive robot Rotation (-0.0, 0.0, 0.0)
+2017-05-01 13:24:46.462839 ::INFO:: Request for First Person View
+2017-05-01 13:24:46.462839 ::INFO:: Sending request: FPS / param= / evt=
+2017-05-01 13:24:46.535319 ::INFO:: Request for First Person View 417066 bytes
+2017-05-01 13:24:46.540322 ::INFO:: Receive First Person View 417066 bytes
+2017-05-01 13:25:38.840582 ::INFO:: Sending request: Close / param= / evt=
+2017-05-01 13:26:02.705431 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-05-01 13:26:07.641341 ::INFO:: Sending request: Close / param= / evt=
+2017-05-01 13:28:13.681333 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-05-01 13:28:18.662738 ::INFO:: Request for robot Position
+2017-05-01 13:28:18.662738 ::INFO:: Sending request: Pos / param= / evt=
+2017-05-01 13:28:18.676307 ::INFO:: Receive robot Position (-5.480096817016602, 3.632999897003174, -2.5769758224487305)
+2017-05-01 13:28:26.705334 ::INFO:: Sending request: Close / param= / evt=
+2017-05-01 13:28:44.993299 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-05-01 13:28:52.543220 ::INFO:: Request for robot Rotation
+2017-05-01 13:28:52.544220 ::INFO:: Sending request: Rot / param= / evt=
+2017-05-01 13:28:52.551932 ::INFO:: Receive robot Rotation (-0.0, 0.0, 0.0)
+2017-05-01 13:28:56.826820 ::INFO:: Sending request: Close / param= / evt=
+2017-05-01 13:29:26.551498 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-05-01 13:29:38.550961 ::INFO:: Sending request: Key / param=w / evt=Down
+2017-05-01 13:29:38.550961 ::INFO:: Event = KeyDown / Param = w
+2017-05-01 13:29:47.151792 ::INFO:: Sending request: Key / param=w / evt=Up
+2017-05-01 13:29:47.155300 ::INFO:: Event = KeyUp / Param = w
+2017-05-01 13:29:50.792998 ::INFO:: Sending request: Close / param= / evt=
+2017-05-01 13:38:29.600679 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-05-01 13:38:43.101860 ::INFO:: Request for robot Position
+2017-05-01 13:38:43.102356 ::INFO:: Sending request: Pos / param= / evt=
+2017-05-01 13:38:43.117603 ::INFO:: Receive robot Position (-5.480096817016602, 3.632999897003174, -2.5769758224487305)
+2017-05-01 13:38:56.366514 ::INFO:: Request for robot Position
+2017-05-01 13:38:56.367012 ::INFO:: Sending request: Pos / param= / evt=
+2017-05-01 13:38:56.382562 ::INFO:: Receive robot Position (-11.190706253051758, 3.6545231342315674, -4.357566833496094)
+2017-05-01 13:39:07.501781 ::INFO:: Request for robot Rotation
+2017-05-01 13:39:07.502283 ::INFO:: Sending request: Rot / param= / evt=
+2017-05-01 13:39:07.515037 ::INFO:: Receive robot Rotation (0.0, 285.60003662109375, 0.0)
+2017-05-01 13:39:12.319407 ::INFO:: Sending request: Close / param= / evt=
