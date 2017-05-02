@@ -1,6 +1,8 @@
 import time
 from datetime import datetime
 
+import sys
+
 SERVER_CONNECTION_ERROR = 'Some error occurred when try to connect to server: ip = {0} / port = {1}'
 KEYEVENT_ERROR = 'Some error occurred when try to send {0} event with Key {1}'
 REQUEST_ERROR = 'Some error occurred when try to send \'{0}\' request'
@@ -13,7 +15,10 @@ class LogWriter:
 
 	def open(self):
 		try:
-			self.file = open(self.filepath, "a", encoding='UTF-8')
+			if sys.version_info.major == 3:
+				self.file = open(self.filepath, "a", encoding='UTF-8')
+			else:
+				self.file = open(self.filepath, "a")
 		except (OSError, IOError) as e:
 			print(str(e))
 
@@ -42,6 +47,7 @@ class LogWriter:
 	def Log(self, msg):
 		self.writeLog('INFO', msg)
 
+
 	def Error(self, msg):
 		self.writeLog('ERROR', msg)
 
@@ -51,5 +57,9 @@ class LogWriter:
 		self.filepath = path
 
 	def close(self):
-		self.file.close()
+		if self.isOpened:
+			self.file.close()
 		self.isOpened = False
+
+	def __del__(self):
+		self.close()

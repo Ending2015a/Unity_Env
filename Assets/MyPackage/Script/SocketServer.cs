@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
+
 class ServerThread{
 	private struct Struct_Internet{
 		public string ip;
@@ -24,6 +25,7 @@ class ServerThread{
 	private Thread threadReceive;
 
 	private bool isConnected = false;
+	private System.Object queuelock = new System.Object();
 
 	public ServerThread(AddressFamily family, SocketType socketType, ProtocolType protocolType, string ip, int port){
 
@@ -49,8 +51,8 @@ class ServerThread{
 		try{
 			clientSocket.Close();
 			isConnected = false;
-		}catch(Exception){
-			
+		}catch(Exception e){
+			Debug.LogError(e.ToString());
 		}
 	}
 
@@ -90,22 +92,23 @@ class ServerThread{
 	public Byte[] GetByte(long size = -1, bool block = false){
 		byte[] msg;
 		if (size == -1) {
-			msg = new byte[receiveMessage.Count];
-			for (long i = 0; i < receiveMessage.Count; i++) {
-				msg [i] = receiveMessage.Dequeue ();
+			lock (queuelock) {
+				msg = new byte[receiveMessage.Count];
+				for (int i=0;receiveMessage.Count>0;i++) {
+					msg [i] = receiveMessage.Dequeue ();
+				}
 			}
 		} else {
 			msg = new byte[size];
 			for (long i = 0; i < size; i++) {
-				if (receiveMessage.Count <= 0 && block) {
-					if (block) {
-						while (receiveMessage.Count <= 0)
-							ReceiveMessage ();
-					} else {
-						return msg;
-					}
+				if (block) {
+					while (receiveMessage.Count <= 0)
+						ReceiveMessage ();
+				} else if (receiveMessage.Count <= 0)
+					return msg;
+				lock (queuelock) {
+					msg [i] = receiveMessage.Dequeue ();
 				}
-				msg [i] = receiveMessage.Dequeue ();
 			}
 		}
 		return msg;
@@ -126,7 +129,6 @@ class ServerThread{
 
 	private void SendMessage(){
 		try{
-			;
 			if(clientSocket.Connected == true){
 				clientSocket.Send(sendMessage);
 			}else{
@@ -147,7 +149,9 @@ class ServerThread{
 
 			Array.Copy (bytes, recvmsg, dataLength);
 			foreach (byte b in recvmsg) {
-				receiveMessage.Enqueue (b);
+				lock (queuelock) {
+					receiveMessage.Enqueue (b);
+				}
 			}
 			//receiveMessage = bytes;
 		}
@@ -207,14 +211,6 @@ public class SocketServer : MonoBehaviour {
 
 			if (st.receiveMessage.Count >=2) {
 				byte[] message = st.GetByte (2);
-				//string message = st.GetString ();
-				/*
-				if (message.Length == 0) {
-					LogWriter.Log ("Client lost connection");
-					Debug.Log ("Client lost connection");
-					Restart ();
-					return;
-				}*/
 				string msg = parser.Parse (message);
 				LogWriter.Log ("Client: " + msg);
 				Debug.Log ("Client: " + msg);

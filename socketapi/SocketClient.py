@@ -8,6 +8,7 @@ class clientSock:
 	def connect(self, ip, port):
 		self.server_addr = {'ip': ip, 'port': port}
 		self.sock.connect((ip, port))
+		self.isConnected=True
 
 	def connect_self(self, port):
 		self.sock.connect(('localhost', port))
@@ -28,4 +29,10 @@ class clientSock:
 		self.sock.settimeout(timeout)
 
 	def close(self):
-		self.sock.close();
+		if self.isConnected:
+			self.send((chr(0)+chr(0)).encode('ascii', 'replace'))
+			self.sock.close()
+		self.isConnected = False
+
+	def __del__(self):
+		self.close()

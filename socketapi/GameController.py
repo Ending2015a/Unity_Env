@@ -29,7 +29,7 @@ class Controller(object):
 	def KeyDown(self, keycode):
 		try:
 			self.send(request='Key', param=keycode, evt='Down')
-			self.log.Log('Event = {0} / Param = {1}'.format('KeyDown', keycode))
+			#self.log.Log('Event = {0} / Param = {1}'.format('KeyDown', keycode))
 		except socket.error as e:
 			self.controller.close()
 			self.log.Error(logw.KEYEVENT_ERROR.format('KeyDown', keycode))
@@ -39,7 +39,7 @@ class Controller(object):
 	def KeyUp(self, keycode):
 		try:
 			self.send(request='Key', param=keycode, evt='Up')
-			self.log.Log('Event = {0} / Param = {1}'.format('KeyUp', keycode))
+			#self.log.Log('Event = {0} / Param = {1}'.format('KeyUp', keycode))
 		except socket.error as e:
 			self.controller.close()
 			self.log.Error(logw.KEYEVENT_ERROR.format('KeyUp', keycode))
@@ -49,7 +49,7 @@ class Controller(object):
 	def KeyPress(self, keycode):
 		try:
 			self.send(request='Key', param=keycode, evt='Press')
-			self.log.Log('Event = {0} / Param = {1}'.format('KeyPress', keycode))
+			#self.log.Log('Event = {0} / Param = {1}'.format('KeyPress', keycode))
 
 		except socket.error as e:
 			self.controller.close()
@@ -60,7 +60,7 @@ class Controller(object):
 	def setSpeed(self, speed):
 		try:
 			self.send(request='Speed' , param=speed)
-			self.log.Log('Event = {0} / Param = {1}'.format('SetSpeed', speed))
+			#self.log.Log('Event = {0} / Param = {1}'.format('SetSpeed', speed))
 		except socket.error as e:
 			self.controller.close()
 			self.log.Error(logw.REQUEST_PARAM_ERROR.format('setSpeed', speed))
@@ -73,7 +73,7 @@ class Controller(object):
 	def setRotateSpeed(self, speed):
 		try:
 			self.send(request='RSpeed' , param=speed)
-			self.log.Log('Event = {0} / Param = {1}'.format('SetRotateSpeed', speed))
+			#self.log.Log('Event = {0} / Param = {1}'.format('SetRotateSpeed', speed))
 		except socket.error as e:
 			self.controller.close()
 			self.log.Error(logw.REQUEST_PARAM_ERROR.format('setRotateSpeed', speed))
@@ -84,7 +84,6 @@ class Controller(object):
 		self.setRotateSpeed(speed)
 
 	def getFirstView(self):
-		self.log.Log('Request for First Person View') #log
 		try:
 			self.send(request='FPS')
 			bt = self.controller.recv(4)
@@ -118,30 +117,63 @@ class Controller(object):
 	#	return 0
 
 	def getPos(self):
-		self.log.Log('Request for robot Position')
 		try:
-			self.send(request='Pos')
+			self.send(request='getPos')
 			bt = self.controller.recv(12)
 			(x,y,z) = struct.unpack('fff', bt)
 			self.log.Log('Receive robot Position ({0}, {1}, {2})'.format(x,y,z))
 			return x,y,z
 		except socket.error as e:
 			self.controller.close()
-			self.log.Error(logw.REQUEST_ERROR.format('Pos'))
+			self.log.Error(logw.REQUEST_ERROR.format('getPos'))
 			self.log.Error(str(e))
 		return -1
+
+	def setPos(self, vec):
+		try:
+			self.setPos(vec[0], vec[1], vec[2])
+		except IndexError:
+			print('Index Error in function setPos(vec)\n')
+			self.log.Error('Index Error in function setPos(vec)')
+			print('\tvec must contain at least 3 numbers\n')
+			self.log.Error('vec must contain at least 3 numbers')
+
+	def setPos(self, x, y, z):
+		try:
+			self.send(request='setPos', param=[x, y, z])
+		except socket.error as e:
+			self.controller.close()
+			self.log.Error(low.REQUEST_ERROR.format('setPos'))
+			self.log.Error(str(e))
 
 	def getRot(self):
 		self.log.Log('Request for robot Rotation')
 		try:
-			self.send(request='Rot')
+			self.send(request='getRot')
 			bt = self.controller.recv(12)
 			(x,y,z) = struct.unpack('fff', bt)
 			self.log.Log('Receive robot Rotation ({0}, {1}, {2})'.format(x,y,z))
 			return x,y,z
 		except socket.error as e:
 			self.controller.close()
-			self.lof.Error(logw.REQUEST_ERROR.format('Pos'))
+			self.lof.Error(logw.REQUEST_ERROR.format('getRot'))
+			self.log.Error(str(e))
+
+	def setRot(self, vec):
+		try:
+			self.setRot(vec[0], vec[1], vec[2])
+		except IndexError:
+			print('Index Error in function setRot(vec)\n')
+			self.log.Error('Index Error in function setRot(vec)')
+			print('\tvec must contain at least 3 numbers\n')
+			self.log.Error('vec must contain at least 3 numbers')
+
+	def setRot(self, x, y, z):
+		try:
+			self.send(request='setRot', param=[x, y, z])
+		except socket.error as e:
+			self.controller.close()
+			self.log.Error(low.REQUEST_ERROR.format('setRot'))
 			self.log.Error(str(e))
 
 	def send(self, request, param='', evt=''):
@@ -161,19 +193,24 @@ class Controller(object):
 		elif request == 'RSpeed': #05
 			self.sendascii(chr(0x05) + chr(0))
 			self.controller.send(struct.pack('f', param))
-		elif request == 'Pos': #06
+		elif request == 'getPos': #06
 			self.sendascii(chr(0x06) + chr(0))
 		elif request == 'FPS': #07
 			self.sendascii(chr(0x07) + chr(0))
-		elif request == 'Rot': #08
+		elif request == 'getRot': #08
 			self.sendascii(chr(0x08) + chr(0))
+		elif request == 'setPos': #09
+			self.sendascii(chr(0x09) + chr(0))
+			self.controller.send(struct.pack('fff', param[0], param[1], param[2]))
+		elif request == 'setRot': #0a
+			self.sendascii(chr(0x0a) + chr(0))
+			self.controller.send(struct.pack('fff', param[0], param[1], param[2]))
 		elif request == 'S': #ff
 			self.sendascii(chr(0xff) + chr(len(param)))
 			self.controller.send(param.encode("UTF-8"))
 			return;
 		else: #ff
-			self.sendascii(chr(0xff) + chr(len(param)))
-			self.controller.send(param.encode("UTF-8"))
+			self.log.Error('Sending Unknown request: {0} / param={1} / evt={2}'.format(request, param, evt))
 			return;
 		self.log.Log('Sending request: {0} / param={1} / evt={2}'.format(request, param, evt))
 
@@ -185,9 +222,8 @@ class Controller(object):
 		self.log.Log('Sending message : ' + message) #log
 
 	def close(self):
-		self.send('Close')
 		self.controller.close()
-		self.log.close()
 
 	def __del__(self):
 		self.close()
+		self.log.close()

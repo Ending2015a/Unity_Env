@@ -55,7 +55,7 @@ public class CommandParser : MonoBehaviour {
 			float speed = BitConverter.ToSingle (bytes, 0);
 			this.GetComponent<UnityStandardAssets.Characters.FirstPerson.ControllerScript> ().RotateSpeed = speed;
 			return string.Format ("Set RotateSpeed to {0} ", speed);
-		} else if (cmd == 6) {  //Pos
+		} else if (cmd == 6) {  //getPos
 			Vector3 pos = this.transform.position;
 			byte[] buff = new byte[sizeof(float) * 3];
 			Buffer.BlockCopy (BitConverter.GetBytes (pos.x), 0, buff, 0, 4);
@@ -70,7 +70,7 @@ public class CommandParser : MonoBehaviour {
 			server.Send (bytes.Length);
 			server.Send (bytes);
 			return "Get FPS";
-		} else if (cmd == 8) {  //Rot
+		} else if (cmd == 8) {  //getRot
 			Vector3 rot = this.transform.localEulerAngles;
 			byte[] buff = new byte[sizeof(float) * 3];
 			Buffer.BlockCopy (BitConverter.GetBytes (rot.x), 0, buff, 0, 4);
@@ -78,7 +78,21 @@ public class CommandParser : MonoBehaviour {
 			Buffer.BlockCopy (BitConverter.GetBytes (rot.z), 0, buff, 8, 4);
 			server.Send (buff);
 			return "Get Rotation";
-		} else if (cmd == 0xff) {  //String
+		} else if (cmd == 9) {  //setPos
+			byte[] bytes = server.GetByte(12, true);
+			float x = BitConverter.ToSingle (bytes, 0);
+			float y = BitConverter.ToSingle (bytes, 4);
+			float z = BitConverter.ToSingle (bytes, 8);
+			this.transform.localPosition = new Vector3 (x, y, z);
+			return string.Format("Set Position to ({0}, {1}, {2})", x, y, z);
+		} else if(cmd == 0x0a){  //setRot
+			byte[] bytes = server.GetByte(12, true);
+			float x = BitConverter.ToSingle (bytes, 0);
+			float y = BitConverter.ToSingle (bytes, 4);
+			float z = BitConverter.ToSingle (bytes, 8);
+			this.transform.localRotation = Quaternion.Euler(new Vector3 (x, y, z));
+			return string.Format("Set Rotation to ({0}, {1}, {2})", x, y, z);
+		}else if (cmd == 0xff) {  //String
 			uint sz = command[1];
 			return server.GetString ((int)sz);
 		}
