@@ -295,7 +295,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
 		}
 
-		public void OnToggle(int index){
+		public void OnChangeMode(int index){
 			switch (index) {
 			case 0:
 				ManualMode = true;

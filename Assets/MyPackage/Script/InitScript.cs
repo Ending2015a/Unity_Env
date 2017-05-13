@@ -95,4 +95,8 @@ public class InitScript : MonoBehaviour {
 		orthcam.GetComponent<MinimapScript>().fixedRotation = fixedminimap;
 	}
 
+	public void OnToggle(int index){
+		robot.GetComponent<UnityStandardAssets.Characters.FirstPerson.ControllerScript> ().OnChangeMode (index);
+	}
+
 }
