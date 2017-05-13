@@ -49,7 +49,8 @@ class ServerThread{
 
 	public void StopConnect(){
 		try{
-			clientSocket.Close();
+			if(isConnected)
+				clientSocket.Close();
 			isConnected = false;
 		}catch(Exception e){
 			Debug.LogError(e.ToString());

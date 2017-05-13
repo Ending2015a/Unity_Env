@@ -7,15 +7,40 @@ public class InitScript : MonoBehaviour {
 
 	public int gameMode = 0;
 	public GameObject optionPanel;
-	public SocketServer server;
+	private SocketServer server;
 	public InputField portInput;
 
 	public UnityEngine.UI.Text LogContent;
-	public GameObject robot;
-	public GameObject orthcam;
+
+	public string controller_name;
+	public string orthcam_name;
+	public string socket_server_object_name;
+	private GameObject robot;
+	private GameObject orthcam;
+	public UnityEngine.UI.Text posText;
+	public UnityEngine.UI.Text rotText;
 
 	public bool showminimap = true;
 	public bool fixedminimap = false;
+
+	void Awake(){
+		robot = GameObject.Find(controller_name);
+		if (robot == null) {
+			Debug.LogError (string.Format("Cannot find object '{0}'", controller_name));
+		}
+
+		orthcam = GameObject.Find (orthcam_name);
+		if (orthcam == null) {
+			Debug.LogError (string.Format ("Cannot find object '{0}'", orthcam));
+		}
+
+		GameObject server_obj = GameObject.Find (socket_server_object_name);
+		if (server_obj == null) {
+			Debug.LogError (string.Format ("Cannot find object '{0}'", orthcam));
+		} else {
+			server = server_obj.GetComponent<SocketServer> ();
+		}
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -43,6 +68,8 @@ public class InitScript : MonoBehaviour {
 			LogContent.text = LogContent.text + str; 
 		}
 
+		posText.text = "Pos: " + robot.transform.localPosition;
+		rotText.text = "Rot: " + robot.transform.localEulerAngles;
 	}
 
 
