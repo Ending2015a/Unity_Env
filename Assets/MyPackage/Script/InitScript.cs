@@ -14,14 +14,17 @@ public class InitScript : MonoBehaviour {
 
 	public string controller_name;
 	public string orthcam_name;
+	public string depthcam_name;
 	public string socket_server_object_name;
 	private GameObject robot;
 	private GameObject orthcam;
+	private GameObject depthcam;
 	public UnityEngine.UI.Text posText;
 	public UnityEngine.UI.Text rotText;
 
 	public bool showminimap = true;
 	public bool fixedminimap = false;
+	public bool showdepth = true;
 
 	void Awake(){
 		robot = GameObject.Find(controller_name);
@@ -31,12 +34,17 @@ public class InitScript : MonoBehaviour {
 
 		orthcam = GameObject.Find (orthcam_name);
 		if (orthcam == null) {
-			Debug.LogError (string.Format ("Cannot find object '{0}'", orthcam));
+			Debug.LogError (string.Format ("Cannot find object '{0}'", orthcam_name));
+		}
+
+		depthcam = GameObject.Find (depthcam_name);
+		if (depthcam == null) {
+			Debug.LogError (string.Format ("Cannot find object '{0}'", depthcam_name));
 		}
 
 		GameObject server_obj = GameObject.Find (socket_server_object_name);
 		if (server_obj == null) {
-			Debug.LogError (string.Format ("Cannot find object '{0}'", orthcam));
+			Debug.LogError (string.Format ("Cannot find object '{0}'", socket_server_object_name));
 		} else {
 			server = server_obj.GetComponent<SocketServer> ();
 		}
@@ -97,6 +105,11 @@ public class InitScript : MonoBehaviour {
 
 	public void OnToggle(int index){
 		robot.GetComponent<UnityStandardAssets.Characters.FirstPerson.ControllerScript> ().OnChangeMode (index);
+	}
+
+	public void showDepth(){
+		showdepth = !showdepth;
+		depthcam.SetActive (showdepth);
 	}
 
 }

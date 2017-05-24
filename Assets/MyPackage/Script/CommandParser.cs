@@ -7,10 +7,12 @@ public class CommandParser : MonoBehaviour {
 
 	public Camera FirstCamera;
 	public Camera ThirdCamera;
+	public Camera DepthCamera;
 
 	private SocketServer server;
 	private ScreenshotScript sssfc;
 	private ScreenshotScript ssstc;
+	private ScreenshotScript sssdc;
 
 
 	// Use this for initialization
@@ -20,6 +22,8 @@ public class CommandParser : MonoBehaviour {
 			sssfc = FirstCamera.GetComponent<ScreenshotScript> ();
 		if(ThirdCamera != null)
 			ssstc = ThirdCamera.GetComponent<ScreenshotScript> ();
+		if (DepthCamera != null)
+			sssdc = DepthCamera.GetComponent<ScreenshotScript> ();
 	}
 
 	public string Parse(byte[] command){
@@ -79,20 +83,28 @@ public class CommandParser : MonoBehaviour {
 			server.Send (buff);
 			return "Get Rotation";
 		} else if (cmd == 9) {  //setPos
-			byte[] bytes = server.GetByte(12, true);
+			byte[] bytes = server.GetByte (12, true);
 			float x = BitConverter.ToSingle (bytes, 0);
 			float y = BitConverter.ToSingle (bytes, 4);
 			float z = BitConverter.ToSingle (bytes, 8);
 			this.transform.localPosition = new Vector3 (x, y, z);
-			return string.Format("Set Position to ({0}, {1}, {2})", x, y, z);
-		} else if(cmd == 0x0a){  //setRot
-			byte[] bytes = server.GetByte(12, true);
+			return string.Format ("Set Position to ({0}, {1}, {2})", x, y, z);
+		} else if (cmd == 0x0a) {  //setRot
+			byte[] bytes = server.GetByte (12, true);
 			float x = BitConverter.ToSingle (bytes, 0);
 			float y = BitConverter.ToSingle (bytes, 4);
 			float z = BitConverter.ToSingle (bytes, 8);
-			this.transform.localRotation = Quaternion.Euler(new Vector3 (x, y, z));
-			return string.Format("Set Rotation to ({0}, {1}, {2})", x, y, z);
-		}else if (cmd == 0xff) {  //String
+			this.transform.localRotation = Quaternion.Euler (new Vector3 (x, y, z));
+			return string.Format ("Set Rotation to ({0}, {1}, {2})", x, y, z);
+		} else if (cmd == 0x0b) { //getDepth
+			if(DepthCamera == null)
+				return "Get Depth failed";
+			//sssdc.ScreenShot ();
+			byte[] bytes = sssdc.getImage ().EncodeToPNG ();
+			server.Send (bytes.Length);
+			server.Send (bytes);
+			return "Get Depth";
+		} else if (cmd == 0xff) {  //String
 			uint sz = command[1];
 			return server.GetString ((int)sz);
 		}

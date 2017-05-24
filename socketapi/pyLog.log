@@ -16,3 +16,24 @@
 2017-05-02 11:22:23.056800 ::ERROR:: Some error occurred when try to connect to server: ip = 127.0.0.1 / port = 4567
 2017-05-02 11:25:44.454299 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
 2017-05-02 11:25:52.420486 ::ERROR:: Some error occurred when try to connect to server: ip = 127.0.0.1 / port = 4567
+2017-05-24 10:39:28.735246 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-05-24 10:40:58.436869 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-05-24 10:40:58.437369 ::INFO:: Sending request: Depth / param= / evt=
+2017-05-24 10:41:08.438192 ::ERROR:: Some error occurred when try to send 'getDepth' request
+2017-05-24 10:41:08.441697 ::ERROR:: timed out
+2017-05-24 10:42:06.094811 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-05-24 10:42:17.278028 ::INFO:: Sending request: Depth / param= / evt=
+2017-05-24 10:42:27.278086 ::ERROR:: Some error occurred when try to send 'getDepth' request
+2017-05-24 10:42:27.280115 ::ERROR:: timed out
+2017-05-24 10:44:06.406670 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-05-24 10:44:11.870103 ::INFO:: Sending request: Depth / param= / evt=
+2017-05-24 10:44:21.870244 ::ERROR:: Some error occurred when try to send 'getDepth' request
+2017-05-24 10:44:21.873229 ::ERROR:: timed out
+2017-05-24 10:46:13.678522 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-05-24 10:46:18.477792 ::INFO:: Sending request: Depth / param= / evt=
+2017-05-24 10:46:28.478534 ::ERROR:: Some error occurred when try to send 'getDepth' request
+2017-05-24 10:46:28.479535 ::ERROR:: timed out
+2017-05-24 10:47:09.110505 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-05-24 10:47:20.181808 ::INFO:: Sending request: Depth / param= / evt=
+2017-05-24 10:47:20.220233 ::INFO:: Request for Depth Map 18938 bytes
+2017-05-24 10:47:20.220233 ::INFO:: Receive Depth Map 18938 bytes

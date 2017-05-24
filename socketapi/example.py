@@ -10,9 +10,9 @@ con.connect()
 keyarray = np.zeros(128, dtype=np.int)
 
 while True:
-	img = con.getFirstView()
+	img = con.getDepth()
 	img = imd.decode(img)
-	cv2.imshow('FirstView', img)
+	cv2.imshow('Depth', img)
 	
 	key = cv2.waitKey(10)
 	if key <= 127:

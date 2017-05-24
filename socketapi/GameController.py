@@ -100,6 +100,22 @@ class Controller(object):
 
 		return -1
 
+	def getDepth(self):
+		try:
+			self.send(request='Depth')
+			bt = self.controller.recv(4)
+			(bt, ) = struct.unpack('i', bt)
+			self.log.Log('Request for Depth Map {0} bytes'.format(bt))
+			image = self.controller.recv(bt)
+			self.log.Log('Receive Depth Map {0} bytes'.format(bt))
+			return image
+		except socket.error as e:
+			self.controller.close()
+			self.log.Error(logw.REQUEST_ERROR.format('getDepth'))
+			self.log.Error(str(e))
+
+		return -1
+
 	#def getThirdView(self):
 	#	self.log.Log('Request for Third Person View') #log
 	#	try:
@@ -205,6 +221,8 @@ class Controller(object):
 		elif request == 'setRot': #0a
 			self.sendascii(chr(0x0a) + chr(0))
 			self.controller.send(struct.pack('fff', param[0], param[1], param[2]))
+		elif request == 'Depth':
+			self.sendascii(chr(0x0b) + chr(0))
 		elif request == 'S': #ff
 			self.sendascii(chr(0xff) + chr(len(param)))
 			self.controller.send(param.encode("UTF-8"))
