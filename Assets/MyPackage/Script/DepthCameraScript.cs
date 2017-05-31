@@ -5,19 +5,17 @@ using UnityEngine;
 public class DepthCameraScript : MonoBehaviour {
 
 	public Material mat;
-	public Camera camera;
+	private Camera cam;
 
 	void Awake (){
-		camera = this.GetComponent<Camera> ();
+		cam = this.GetComponent<Camera> ();
 	}
 
 	void Start () {
-		camera.depthTextureMode = DepthTextureMode.Depth;
+		cam.depthTextureMode = DepthTextureMode.Depth;
 	}
 
 	void OnRenderImage (RenderTexture source, RenderTexture destination){
 		Graphics.Blit(source,destination,mat);
-		//mat is the material which contains the shader
-		//we are passing the destination RenderTexture to
 	}
 }

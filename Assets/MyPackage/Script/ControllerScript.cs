@@ -77,7 +77,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			if (!m_PreviouslyGrounded && m_CharacterController.isGrounded)
 			{
 				StartCoroutine(m_JumpBob.DoBobCycle());
-				PlayLandingSound();
 				m_MoveDir.y = 0f;
 				m_Jumping = false;
 			}
@@ -92,16 +91,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		}
 
 
-		private void PlayLandingSound()
-		{
-			/*
-			m_AudioSource.clip = m_LandSound;
-			m_AudioSource.Play();
-			m_NextStep = m_StepCycle + .5f;
-			*/
-		}
-
-
 		private void FixedUpdate()
 		{
 			float speed;
@@ -110,10 +99,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			Vector3 desiredMove = transform.forward*m_Input.y;
 
 			// get a normal for the surface that is being touched to move along it
-			RaycastHit hitInfo;
-			Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
-				m_CharacterController.height/2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
-			desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
+			//RaycastHit hitInfo;
+			//Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
+			//	m_CharacterController.height/2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
+			//desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
 
 			m_MoveDir.x = desiredMove.x*speed;
 			m_MoveDir.z = desiredMove.z*speed;
@@ -122,15 +111,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			if (m_CharacterController.isGrounded)
 			{
 				m_MoveDir.y = -m_StickToGroundForce;
-
-				/*
-				if (m_Jump)
-				{
-					m_MoveDir.y = m_JumpSpeed;
-					PlayJumpSound();
-					m_Jump = false;
-					m_Jumping = true;
-				}*/
 
 			}
 			else
@@ -141,83 +121,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
 			this.transform.Rotate(new Vector3(0, m_Input.x*Time.fixedDeltaTime * m_RotateSpeed, 0));
 
-			//ProgressStepCycle(speed);
-			//UpdateCameraPosition(speed);
-
-			//m_MouseLook.UpdateCursorLock();
-		}
-
-
-		private void PlayJumpSound()
-		{
-			/*
-			m_AudioSource.clip = m_JumpSound;
-			m_AudioSource.Play();
-			*/
-		}
-
-
-		private void ProgressStepCycle(float speed)
-		{
-			/*
-			if (m_CharacterController.velocity.sqrMagnitude > 0 && (m_Input.x != 0 || m_Input.y != 0))
-			{
-				m_StepCycle += (m_CharacterController.velocity.magnitude + (speed*(m_IsWalking ? 1f : m_RunstepLenghten)))*
-					Time.fixedDeltaTime;
-			}
-
-			if (!(m_StepCycle > m_NextStep))
-			{
-				return;
-			}
-
-			m_NextStep = m_StepCycle + m_StepInterval;
-
-			PlayFootStepAudio();*/
-		}
-
-
-		private void PlayFootStepAudio()
-		{
-			/*
-			if (!m_CharacterController.isGrounded)
-			{
-				return;
-			}
-			// pick & play a random footstep sound from the array,
-			// excluding sound at index 0
-			int n = Random.Range(1, m_FootstepSounds.Length);
-			m_AudioSource.clip = m_FootstepSounds[n];
-			m_AudioSource.PlayOneShot(m_AudioSource.clip);
-			// move picked sound to index 0 so it's not picked next time
-			m_FootstepSounds[n] = m_FootstepSounds[0];
-			m_FootstepSounds[0] = m_AudioSource.clip;*/
-		}
-
-
-		private void UpdateCameraPosition(float speed)
-		{
-			/*
-			Vector3 newCameraPosition;
-			if (!m_UseHeadBob)
-			{
-				return;
-			}
-			if (m_CharacterController.velocity.magnitude > 0 && m_CharacterController.isGrounded)
-			{
-				m_Camera.transform.localPosition =
-					m_HeadBob.DoHeadBob(m_CharacterController.velocity.magnitude +
-						(speed*(m_IsWalking ? 1f : m_RunstepLenghten)));
-				newCameraPosition = m_Camera.transform.localPosition;
-				newCameraPosition.y = m_Camera.transform.localPosition.y - m_JumpBob.Offset();
-			}
-			else
-			{
-				newCameraPosition = m_Camera.transform.localPosition;
-				newCameraPosition.y = m_OriginalCameraPosition.y - m_JumpBob.Offset();
-			}
-			m_Camera.transform.localPosition = newCameraPosition;
-			*/
 		}
 
 
@@ -227,16 +130,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
 				horizontal = (Input.GetKey(KeyCode.D) ? 1 : horizontal);
 				vertical = (Input.GetKey (KeyCode.W) ? 1 : vertical);
 				vertical = (Input.GetKey (KeyCode.S) ? -1 : vertical);
+			} else if (SpeedMode) {
+				horizontal = 1;
+				vertical = 1;
 			} else {
-				if (SpeedMode) {
-					horizontal = 1;
-					vertical = 1;
-				} else {
-					horizontal = (InputManager.GetKey (KeyCode.A) ? -1 : horizontal);
-					horizontal = (InputManager.GetKey (KeyCode.D) ? 1 : horizontal);
-					vertical = (InputManager.GetKey (KeyCode.W) ? 1 : vertical);
-					vertical = (InputManager.GetKey (KeyCode.S) ? -1 : vertical);
-				}
+				horizontal = (InputManager.GetKey (KeyCode.A) ? -1 : horizontal);
+				horizontal = (InputManager.GetKey (KeyCode.D) ? 1 : horizontal);
+				vertical = (InputManager.GetKey (KeyCode.W) ? 1 : vertical);
+				vertical = (InputManager.GetKey (KeyCode.S) ? -1 : vertical);
 			}
 		}
 
@@ -292,7 +193,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			{
 				return;
 			}
-			body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
+			//body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
 		}
 
 		public void OnChangeMode(int index){

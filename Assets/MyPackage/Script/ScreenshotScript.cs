@@ -14,9 +14,10 @@ public class ScreenshotScript : MonoBehaviour {
 
 	private Texture2D newTex;
 	private bool shotting = false;
+	private RenderTexture target;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		cam = this.GetComponent<Camera> ();
 		if (cam == null)
 			Debug.LogError ("Cant find Camera in: " + this.name);
@@ -40,6 +41,15 @@ public class ScreenshotScript : MonoBehaviour {
 			Application.dataPath, Width, Height, System.DateTime.Now.ToString ("yyyy-MM-dd_HH-mm-ss"));
 	}
 
+	public void renderToScreen(bool b){
+		if (b)
+			target = null;
+		else
+			target = new RenderTexture (Width, Height, 24);
+		cam.targetTexture = target;
+		RenderTexture.active = target;
+	}
+
 	public Texture2D getImage(){
 		
 		if (!shotting) {
@@ -50,8 +60,8 @@ public class ScreenshotScript : MonoBehaviour {
 			cam.Render ();
 			RenderTexture.active = sc;
 			screenShot.ReadPixels (new Rect (0, 0, Width, Height), 0, 0);
-			cam.targetTexture = null;
-			RenderTexture.active = null;
+			cam.targetTexture = target;
+			RenderTexture.active = target;
 			Destroy (sc);
 			newTex = screenShot;
 

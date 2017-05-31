@@ -13,23 +13,36 @@ public class InitScript : MonoBehaviour {
 	public UnityEngine.UI.Text LogContent;
 
 	public string controller_name;
+	public string fpscam_name;
 	public string orthcam_name;
 	public string depthcam_name;
 	public string socket_server_object_name;
 	private GameObject robot;
+	private GameObject fpscam;
 	private GameObject orthcam;
 	private GameObject depthcam;
 	public UnityEngine.UI.Text posText;
 	public UnityEngine.UI.Text rotText;
 
+
+	public UnityEngine.UI.Toggle minimapToggle;
+	public UnityEngine.UI.Toggle minimapRotateToggle;
+	public UnityEngine.UI.Toggle depthMapToggle;
+	public UnityEngine.UI.Toggle SphericalToggle;
 	public bool showminimap = true;
 	public bool fixedminimap = false;
-	public bool showdepth = true;
+	public bool showdepth = false;
+	public bool enablespherical = false;
 
 	void Awake(){
 		robot = GameObject.Find(controller_name);
 		if (robot == null) {
 			Debug.LogError (string.Format("Cannot find object '{0}'", controller_name));
+		}
+
+		fpscam = GameObject.Find (fpscam_name);
+		if (fpscam == null) {
+			Debug.LogError (string.Format ("Cannot find object '{0}'", fpscam_name));
 		}
 
 		orthcam = GameObject.Find (orthcam_name);
@@ -52,7 +65,9 @@ public class InitScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		showMinimap ();
+		fixedMinimap ();
+		showDepth ();
 	}
 	
 	// Update is called once per frame
@@ -94,12 +109,12 @@ public class InitScript : MonoBehaviour {
 	}
 
 	public void showMinimap(){
-		showminimap = !showminimap;
+		showminimap = minimapToggle.isOn;
 		orthcam.SetActive (showminimap);
 	}
 
 	public void fixedMinimap(){
-		fixedminimap = !fixedminimap;
+		fixedminimap = minimapRotateToggle.isOn;
 		orthcam.GetComponent<MinimapScript>().fixedRotation = fixedminimap;
 	}
 
@@ -108,8 +123,13 @@ public class InitScript : MonoBehaviour {
 	}
 
 	public void showDepth(){
-		showdepth = !showdepth;
-		depthcam.SetActive (showdepth);
+		showdepth = depthMapToggle.isOn;
+		depthcam.GetComponent<ScreenshotScript> ().renderToScreen (showdepth);
+	}
+
+	public void showSpherical(){
+		enablespherical = SphericalToggle.isOn;
+		fpscam.GetComponent<SphericalImageCam_Free> ().enablespherical = enablespherical;
 	}
 
 }
