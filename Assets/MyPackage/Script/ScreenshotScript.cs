@@ -43,11 +43,9 @@ public class ScreenshotScript : MonoBehaviour {
 
 	public void renderToScreen(bool b){
 		if (b)
-			target = null;
+			this.GetComponent<Camera> ().enabled = true;
 		else
-			target = new RenderTexture (Width, Height, 24);
-		cam.targetTexture = target;
-		RenderTexture.active = target;
+			this.GetComponent<Camera> ().enabled = false;
 	}
 
 	public Texture2D getImage(){

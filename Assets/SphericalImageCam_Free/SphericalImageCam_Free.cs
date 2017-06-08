@@ -29,11 +29,11 @@ public class SphericalImageCam_Free : MonoBehaviour {
 	private bool canDraw = false;
 	protected bool supportHDRTextures = true;
 	protected bool supportDX11 = false;
-	public bool enablespherical = false;
-	public Material defaultshader;
+	//public bool enablespherical = false;
+	//private Material defaultshader;
 
-	private float defaultNearPlane;
-	private float defaultFarPlane;
+	//private float defaultNearPlane;
+	//private float defaultFarPlane;
 
 	public RenderTexture target;
 	[HideInInspector]
@@ -45,11 +45,12 @@ public class SphericalImageCam_Free : MonoBehaviour {
 
 	void Awake() {
 		if(shader == null) {
-			shader = Resources.Load<Shader>("SphericalShader");
+			//shader = Resources.Load<Shader>("SphericalShader");
 		}
-		defaultshader = new Material(Shader.Find("Custom/DefaultRenderShader"));
-		defaultNearPlane = this.GetComponent<Camera> ().nearClipPlane;
-		defaultFarPlane = this.GetComponent<Camera> ().farClipPlane;
+		shader = Shader.Find ("Hidden/SphericalShader");
+		//defaultshader = new Material(Shader.Find("Custom/DefaultRenderShader"));
+		//defaultNearPlane = this.GetComponent<Camera> ().nearClipPlane;
+		//defaultFarPlane = this.GetComponent<Camera> ().farClipPlane;
 	}
 
 	void Start() {
@@ -105,13 +106,13 @@ public class SphericalImageCam_Free : MonoBehaviour {
 	}
 
 	public void Update(){
-		if (enablespherical) {
+		/*if (enablespherical) {
 			this.GetComponent<Camera>().nearClipPlane = 0.001f;
 			this.GetComponent<Camera>().farClipPlane = 0.002f;
 		} else {
 			this.GetComponent<Camera> ().nearClipPlane = defaultNearPlane;
 			this.GetComponent<Camera> ().farClipPlane = defaultFarPlane;
-		}
+		}*/
 	}
 
 	public void SetGraphicRect(Vector4 rect) {
@@ -152,10 +153,10 @@ public class SphericalImageCam_Free : MonoBehaviour {
 
 	void OnRenderImage(RenderTexture source, RenderTexture destination) {
 		
-		if (canDraw && !drawOnOffscreen && enablespherical) {
+		if (canDraw && !drawOnOffscreen /*&& enablespherical*/) {
 			Graphics.Blit (target, destination);
 		} else {
-			Graphics.Blit (source, destination, defaultshader);
+			/*Graphics.Blit (source, destination, defaultshader);*/
 		}
 	}
 

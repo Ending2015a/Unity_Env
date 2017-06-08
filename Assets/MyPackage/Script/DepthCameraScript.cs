@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class DepthCameraScript : MonoBehaviour {
 
-	public Material mat;
+	private Material mat;
 	private Camera cam;
 
 	void Awake (){
+		mat = new Material (Shader.Find ("Custom/DepthGrayscale"));
 		cam = this.GetComponent<Camera> ();
 	}
 

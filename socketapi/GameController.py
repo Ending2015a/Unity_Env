@@ -26,6 +26,7 @@ class Controller(object):
 			#self.log.Error('Some error occurred when try to connect to server: ip = {0} / port = {1}'.format(ip, port))
 			
 
+######### Key Event #########
 	def KeyDown(self, keycode):
 		try:
 			self.send(request='Key', param=keycode, evt='Down')
@@ -57,6 +58,8 @@ class Controller(object):
 			#self.log.Error('Some error occurred when try to send KeyPress event with Key {0}'.format(keycode))
 			self.log.Error(str(e))
 
+
+######### Speed #########
 	def setSpeed(self, speed):
 		try:
 			self.send(request='Speed' , param=speed)
@@ -83,6 +86,8 @@ class Controller(object):
 	def RSpeed(self, speed):
 		self.setRotateSpeed(speed)
 
+
+######### Camera #########
 	def getFirstView(self):
 		try:
 			self.send(request='FPS')
@@ -116,6 +121,22 @@ class Controller(object):
 
 		return -1
 
+	def getSpherical(self):
+		try:
+			self.send(request='Spherical')
+			bt = self.controller.recv(4)
+			(bt, ) = struct.unpack('i', bt)
+			self.log.Log('Request for Spherical Camera {0} bytes'.format(bt))
+			image = self.controller.recv(bt)
+			self.log.Log('Receive Spherical Camera {0} bytes'.format(bt))
+			return image
+		except socket.error as e:
+			self.controller.close()
+			self.log.Error(logw.REQUEST_ERROR.format('getSpherical'))
+			self.log.Error(str(e))
+
+		return -1
+
 	#def getThirdView(self):
 	#	self.log.Log('Request for Third Person View') #log
 	#	try:
@@ -132,6 +153,8 @@ class Controller(object):
 	#		self.log.Error(str(e))
 	#	return 0
 
+
+######### Position/Rotation #########
 	def getPos(self):
 		try:
 			self.send(request='getPos')
@@ -172,7 +195,7 @@ class Controller(object):
 			return x,y,z
 		except socket.error as e:
 			self.controller.close()
-			self.lof.Error(logw.REQUEST_ERROR.format('getRot'))
+			self.log.Error(logw.REQUEST_ERROR.format('getRot'))
 			self.log.Error(str(e))
 
 	def setRot(self, vec):
@@ -192,6 +215,40 @@ class Controller(object):
 			self.log.Error(low.REQUEST_ERROR.format('setRot'))
 			self.log.Error(str(e))
 
+	def setRandPos(self):
+		try:
+			self.send(request='setRandPos')
+		except socket.error as e:
+			self.controller.close()
+			self.log.Error(low.REQUEST_ERROR.format('setRandPos'))
+			self.log.Error(str(e))
+
+
+######### Other Option #########
+
+	def setTimeScale(self, scale):
+		try:
+			self.send(request='setTimeScale', param=scale)
+		except socket.error as e:
+			self.controller.close()
+			self.log.Error(low.REQUEST_ERROR.format('setTimeScale'))
+			self.log.Error(str(e))
+
+	# Error return -1
+	def getTimeScale(self):
+		try:
+			self.send(request='getTimeScale')
+			bt = self.controller.recv(4)
+			(bt, ) = struct.unpack('f', bt)
+			self.log.Log('Receive Time Scale {0}'.format(bt))
+			return bt;
+		except socket.error as e:
+			self.controller.close()
+			self.log.Error(low.REQUEST_ERROR.format('getTimeScale'))
+			self.logError(str(e))
+		return -1
+
+######### Sending Event #########
 	def send(self, request, param='', evt=''):
 		if request == 'Close': #00
 			self.sendascii(chr(0)+chr(0))
@@ -221,8 +278,17 @@ class Controller(object):
 		elif request == 'setRot': #0a
 			self.sendascii(chr(0x0a) + chr(0))
 			self.controller.send(struct.pack('fff', param[0], param[1], param[2]))
-		elif request == 'Depth':
+		elif request == 'Depth': #0b
 			self.sendascii(chr(0x0b) + chr(0))
+		elif request == 'setTimeScale': #0c
+			self.sendascii(chr(0x0c) + chr(0))
+			self.controller.send(struct.pack('f', param))
+		elif request == 'getTimeScale': #0d
+			self.sendascii(chr(0x0d) + chr(0))
+		elif request == 'setRandPos': #0e
+			self.sendascii(chr(0x0e) + chr(0))
+		elif request == 'Spherical': #0f
+			self.sendascii(chr(0x0f) + chr(0))
 		elif request == 'S': #ff
 			self.sendascii(chr(0xff) + chr(len(param)))
 			self.controller.send(param.encode("UTF-8"))
