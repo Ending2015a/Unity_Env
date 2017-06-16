@@ -9,55 +9,54 @@ using System.Threading;
 
 
 class ServerThread{
-	private struct Struct_Internet{
+	private struct Address{
 		public string ip;
 		public int port;
 	}
 
-	private TcpListener serverSocket = null;
-	//private Socket serverSocket;
-	private TcpClient clientSocket;
-	//private Socket clientSocket;
-	private Struct_Internet internet;
-	//public byte[] receiveMessage;
+	private TcpListener host = null;
+	private TcpClient client;
+	private Address addr;
 	public Queue<byte> receiveMessage;
 	public byte[] sendMessage;
 
-	private Thread threadConnect;
-	private Thread threadReceive;
+	private Thread threadReceive =null;
+	private Thread threadAccept =null;
 
 	private bool isConnected = false;
 	private System.Object queuelock = new System.Object();
 
-	public ServerThread(/*AddressFamily family, SocketType socketType, ProtocolType protocolType,*/ string ip="127.0.0.1", int port=4567){
-
-		//serverSocket = new Socket (family, socketType, protocolType);
-		internet.ip = ip;
-		internet.port = port;
-		//serverSocket.Bind (new IPEndPoint (IPAddress.Parse (internet.ip), internet.port));
-		serverSocket = new TcpListener (IPAddress.Parse (internet.ip), internet.port);
+	public ServerThread(string ip="127.0.0.1", int port=4567){
+		addr.ip = ip;
+		addr.port = port;
+		host = new TcpListener (IPAddress.Parse (addr.ip), addr.port);
 		receiveMessage = new Queue<byte> ();
 	}
 
-	public void Listen(){
-		serverSocket.Start ();
+	public void Start(){
+		host.Start ();
+		LogWriter.Log ("Socket Host Start");
+		Debug.Log ("Socket Host Start");
+		threadAccept = new Thread (Accept);
+		threadAccept.IsBackground = true;
+		threadAccept.Start ();
 	}
 
-	public void StartConnect(){
-		threadConnect = new Thread (Accept);
-		threadConnect.IsBackground = true;
-		threadConnect.Start ();
-	}
-
-	public void StopConnect(){
+	public void Stop(){
 		try{
-			if(isConnected){
-				clientSocket.Close();
-			}
-			serverSocket.Stop();
+			if(threadAccept != null && threadAccept.IsAlive)
+				threadAccept.Abort();
+			if(threadReceive != null && threadReceive.IsAlive)
+				threadReceive.Abort();
+			if(isConnected)
+				client.Close();
+			host.Stop();
 			isConnected = false;
+			LogWriter.Log("Socket Host Stopped");
+			Debug.Log("Socket Host Stopped");
 		}catch(Exception e){
-			Debug.LogError(e.ToString());
+			LogWriter.Error ("Stop Connection Error: " + e.ToString ());
+			Debug.LogException(e);
 		}
 	}
 
@@ -120,25 +119,21 @@ class ServerThread{
 	}
 
 	private void Accept(){
-		try{
-			clientSocket = serverSocket.AcceptTcpClient();
-			IPEndPoint client = clientSocket.Client.RemoteEndPoint as IPEndPoint;
-			LogWriter.Log ("Client Connect: " + client.Address + ":" + client.Port);
-			Debug.Log("Client Connect: " + client.Address + ":" + client.Port);
-			isConnected = true;
-		}catch(Exception e){
-			LogWriter.Error ("Client Connection Error: " + e.ToString());
-			Debug.LogError ("Client Connection Error: " + e.ToString());
-		}
+		if (host == null)
+			return;
+		client = host.AcceptTcpClient();
+		IPEndPoint client_addr = client.Client.RemoteEndPoint as IPEndPoint;
+		LogWriter.Log ("Client Connect: " + client_addr.Address + ":" + client_addr.Port);
+		Debug.Log("Client Connect: " + client_addr.Address + ":" + client_addr.Port);
+		isConnected = true;
 	}
 
 	private void SendMessage(){
 		try{
-			if(clientSocket.Connected == true){
-				clientSocket.GetStream().Write(sendMessage, 0, sendMessage.Length);
-				//clientSocket.GetStream.write(sendMessage);
+			if(client.Connected == true){
+				client.GetStream().Write(sendMessage, 0, sendMessage.Length);
 			}else{
-				throw new Exception("Connection Error : Client Socket Connection: " + clientSocket.Connected + "/n/t in SendMessage");
+				throw new Exception("Connection Error : Client Socket Connection: " + client.Connected + "/n/t in SendMessage");
 			}
 		}catch(Exception e){
 			LogWriter.Error (e.ToString());
@@ -147,12 +142,10 @@ class ServerThread{
 	}
 
 	private void ReceiveMessage(){  //receive data
-		if (clientSocket.Connected == true) {
-			byte[] bytes = new byte[clientSocket.ReceiveBufferSize];
+		if (client.Connected == true) {
+			byte[] bytes = new byte[client.ReceiveBufferSize];
 			try{
-				long dataLength = clientSocket.GetStream ().Read (bytes, 0, bytes.Length);
-
-				//long dataLength = clientSocket.Receive (bytes);
+				long dataLength = client.GetStream ().Read (bytes, 0, bytes.Length);
 				byte[] recvmsg = new byte[dataLength];
 
 				Array.Copy (bytes, recvmsg, dataLength);
@@ -165,13 +158,11 @@ class ServerThread{
 				LogWriter.Error ("Receive Error: " + e.ToString ());
 				Debug.LogException (e);
 			}
-
-			//receiveMessage = bytes;
 		}
 	}
 
 	public bool Connected{   //check if connected to client
-		get{ return isConnected; }
+		get{ return isConnected && client.Connected; }
 	}
 }
 
@@ -190,23 +181,20 @@ public class SocketServer : MonoBehaviour {
 	}
 
 	void Start () {
-		st = new ServerThread (/*AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp,*/ ip, port);
-		st.Listen ();
-		st.StartConnect ();
+		st = new ServerThread (ip, port);
+		st.Start();
 		parser = this.GetComponent<CommandParser> ();
 	}
 
 	public void Rebind(){
-		st.StopConnect ();
-		st = new ServerThread (/*AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp, */ip, port);
-		st.Listen ();
-		st.StartConnect ();
+		st.Stop();
+		st = new ServerThread (ip, port);
+		st.Start();
 	}
 
 	public void Restart(){
-		st.StopConnect();
-		st.Listen ();
-		st.StartConnect ();
+		st.Stop();
+		st.Start();
 	}
 
 	public byte[] GetByte(int size=-1, bool block=false){
@@ -220,18 +208,14 @@ public class SocketServer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (st.Connected) {
-
-
-			if (st.receiveMessage.Count >=2) {
+			if (st.receiveMessage.Count >= 2) {
 				byte[] message = st.GetByte (2);
 				string msg = parser.Parse (message);
 				LogWriter.Log ("Client: " + msg);
 				Debug.Log ("Client: " + msg);
 			}
-
 			st.Receive ();
 		}
-
 	}
 
 	public void Send(string message){
@@ -247,6 +231,6 @@ public class SocketServer : MonoBehaviour {
 	}
 
 	private void OnApplicationQuit(){
-		st.StopConnect ();
+		st.Stop();
 	}
 }
