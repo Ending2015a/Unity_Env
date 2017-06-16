@@ -23,6 +23,7 @@ class Controller(object):
 		except socket.error as e:
 			self.controller.close()
 			self.log.Error(logw.SERVER_CONNECTION_ERROR.format(ip, port))
+			self.log.Error(str(e))
 			#self.log.Error('Some error occurred when try to connect to server: ip = {0} / port = {1}'.format(ip, port))
 			
 

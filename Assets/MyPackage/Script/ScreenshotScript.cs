@@ -14,7 +14,7 @@ public class ScreenshotScript : MonoBehaviour {
 
 	private Texture2D newTex;
 	private bool shotting = false;
-	private RenderTexture target;
+	//private RenderTexture target;
 
 	// Use this for initialization
 	void Awake () {
@@ -58,8 +58,8 @@ public class ScreenshotScript : MonoBehaviour {
 			cam.Render ();
 			RenderTexture.active = sc;
 			screenShot.ReadPixels (new Rect (0, 0, Width, Height), 0, 0);
-			cam.targetTexture = target;
-			RenderTexture.active = target;
+			cam.targetTexture = null;
+			RenderTexture.active = null;
 			Destroy (sc);
 			newTex = screenShot;
 

@@ -24,7 +24,7 @@ public class InitScript : MonoBehaviour {
 	private GameObject orthcam;
 	private GameObject depthcam;
 	private GameObject spherecam;
-	private Vector3 InitialPosition;
+	//private Vector3 InitialPosition;
 	public UnityEngine.UI.Text posText;
 	public UnityEngine.UI.Text rotText;
 
@@ -76,7 +76,7 @@ public class InitScript : MonoBehaviour {
 			server = server_obj.GetComponent<SocketServer> ();
 		}
 
-		InitialPosition = robot.transform.position;
+		//InitialPosition = robot.transform.position;
 	}
 
 	// Use this for initialization

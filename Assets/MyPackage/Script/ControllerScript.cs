@@ -22,7 +22,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		[SerializeField] private bool m_UseFovKick;
 		[SerializeField] private FOVKick m_FovKick = new FOVKick();
 		[SerializeField] private bool m_UseHeadBob;
-		[SerializeField] private CurveControlledBob m_HeadBob = new CurveControlledBob();
+		//[SerializeField] private CurveControlledBob m_HeadBob = new CurveControlledBob();
 		[SerializeField] private LerpControlledBob m_JumpBob = new LerpControlledBob();
 		[SerializeField] private float m_StepInterval;
 		[SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
@@ -38,10 +38,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		private CollisionFlags m_CollisionFlags;
 		private bool m_PreviouslyGrounded;
 		private Vector3 m_OriginalCameraPosition;
-		private float m_StepCycle;
-		private float m_NextStep;
+		//private float m_StepCycle;
+		//private float m_NextStep;
 		private bool m_Jumping;
-		private AudioSource m_AudioSource;
+		//private AudioSource m_AudioSource;
 
 		public bool ManualMode = false;
 		public bool SpeedMode = false;
@@ -50,10 +50,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		private void Start()
 		{
 			m_CharacterController = GetComponent<CharacterController>();
-			m_StepCycle = 0f;
-			m_NextStep = m_StepCycle/2f;
+			//m_StepCycle = 0f;
+			//m_NextStep = m_StepCycle/2f;
 			m_Jumping = false;
-			m_AudioSource = GetComponent<AudioSource>();
+			//m_AudioSource = GetComponent<AudioSource>();
 
 		}
 

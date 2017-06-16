@@ -4,8 +4,9 @@ import socket
 class clientSock:
 	def __init__(self, family=socket.AF_INET, protocol=socket.SOCK_STREAM):
 		self.sock = socket.socket(family, protocol)
+		self.isConnected = False
 
-	def connect(self, ip, port):
+	def connect(self, ip='127.0.0.1', port=4567):
 		self.server_addr = {'ip': ip, 'port': port}
 		self.sock.connect((ip, port))
 		self.isConnected=True

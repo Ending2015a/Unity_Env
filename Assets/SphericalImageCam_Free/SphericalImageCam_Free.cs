@@ -169,12 +169,12 @@ public class SphericalImageCam_Free : MonoBehaviour {
 
 	class RenderEvent : MonoBehaviour {
 		public Material material;
-		public Material defaultmat;
+		//public Material defaultmat;
 
 		void OnRenderImage(RenderTexture source, RenderTexture destination) {
-			if (material == null) {
-				Graphics.Blit(source, destination, defaultmat);
-			}
+			//if (material == null) {
+			//	Graphics.Blit(source, destination, defaultmat);
+			//}
 			Graphics.Blit(source, destination, material);
 		}
 

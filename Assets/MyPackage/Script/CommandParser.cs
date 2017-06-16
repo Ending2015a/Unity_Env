@@ -12,7 +12,6 @@ public class CommandParser : MonoBehaviour {
 
 	private SocketServer server;
 	private ScreenshotScript sssfc;
-	private ScreenshotScript ssstc;
 	private ScreenshotScript sssdc;
 	private ScreenshotScript ssssc;
 
@@ -24,8 +23,6 @@ public class CommandParser : MonoBehaviour {
 		server = this.GetComponent<SocketServer> ();
 		if(FirstCamera != null)
 			sssfc = FirstCamera.GetComponent<ScreenshotScript> ();
-		if(ThirdCamera != null)
-			ssstc = ThirdCamera.GetComponent<ScreenshotScript> ();
 		if (DepthCamera != null)
 			sssdc = DepthCamera.GetComponent<ScreenshotScript> ();
 		if (SphereCamera != null)

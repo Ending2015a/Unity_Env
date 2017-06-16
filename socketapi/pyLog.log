@@ -83,3 +83,73 @@
 2017-06-08 23:38:06.026871 ::INFO:: Sending request: setRandPos / param= / evt=
 2017-06-08 23:40:59.794481 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
 2017-06-08 23:41:06.793581 ::INFO:: Sending request: setRandPos / param= / evt=
+2017-06-10 14:48:12.548119 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 1234
+2017-06-10 14:49:36.252933 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-06-10 14:49:55.739439 ::ERROR:: Some error occurred when try to connect to server: ip = 127.0.0.1 / port = 4567
+2017-06-10 14:54:31.123239 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 5678
+2017-06-10 14:55:56.284771 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-06-10 14:56:54.819849 ::INFO:: Sending request: FPS / param= / evt=
+2017-06-10 14:57:30.993905 ::INFO:: Sending request: FPS / param= / evt=
+2017-06-10 14:57:31.160039 ::INFO:: Request for First Person View 204366 bytes
+2017-06-10 14:57:31.162040 ::INFO:: Receive First Person View 204366 bytes
+2017-06-16 15:13:00.930781 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-06-16 15:16:40.586874 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-06-16 15:17:00.684154 ::ERROR:: Some error occurred when try to connect to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 15:17:09.957252 ::ERROR:: Some error occurred when try to connect to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 15:53:57.045679 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-06-16 15:54:06.846640 ::INFO:: Sending request: getPos / param= / evt=
+2017-06-16 15:54:06.975731 ::INFO:: Receive robot Position (0.0521414615213871, 3.630000114440918, -1.979248046875)
+2017-06-16 15:54:49.387165 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-06-16 15:54:57.121160 ::INFO:: Sending request: getPos / param= / evt=
+2017-06-16 15:54:57.128663 ::INFO:: Receive robot Position (0.0521414615213871, 3.630000114440918, -1.979248046875)
+2017-06-16 15:55:36.254258 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 7890
+2017-06-16 15:55:46.578041 ::INFO:: Sending request: getPos / param= / evt=
+2017-06-16 15:55:46.592052 ::INFO:: Receive robot Position (0.0521414615213871, 3.630000114440918, -1.979248046875)
+2017-06-16 15:57:29.795629 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-06-16 15:58:30.490262 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 15:58:50.070670 ::INFO:: Sending request: getPos / param= / evt=
+2017-06-16 15:58:50.090184 ::INFO:: Receive robot Position (0.0521414615213871, 3.630000114440918, -1.979248046875)
+2017-06-16 15:58:54.085536 ::INFO:: Sending request: getPos / param= / evt=
+2017-06-16 15:59:04.086627 ::ERROR:: Some error occurred when try to send 'getPos' request
+2017-06-16 15:59:04.088629 ::ERROR:: timed out
+2017-06-16 15:59:31.807380 ::INFO:: Sending request: getPos / param= / evt=
+2017-06-16 15:59:31.812383 ::INFO:: Receive robot Position (0.0521414615213871, 3.630000114440918, -1.979248046875)
+2017-06-16 15:59:54.049687 ::ERROR:: Some error occurred when try to connect to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 16:00:09.402099 ::ERROR:: Some error occurred when try to connect to server: ip = 127.0.0.1 / port = 5679
+2017-06-16 16:00:30.224825 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 5679
+2017-06-16 16:00:33.200440 ::INFO:: Sending request: getPos / param= / evt=
+2017-06-16 16:00:43.200542 ::ERROR:: Some error occurred when try to send 'getPos' request
+2017-06-16 16:00:43.202043 ::ERROR:: timed out
+2017-06-16 16:33:13.786930 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 16:33:36.315038 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-06-16 16:33:44.184629 ::INFO:: Sending request: getPos / param= / evt=
+2017-06-16 16:33:54.185733 ::ERROR:: Some error occurred when try to send 'getPos' request
+2017-06-16 16:33:54.186233 ::ERROR:: timed out
+2017-06-16 16:35:18.234628 ::INFO:: Sending request: getPos / param= / evt=
+2017-06-16 16:35:18.263147 ::INFO:: Receive robot Position (0.0521414615213871, 3.630000114440918, -1.979248046875)
+2017-06-16 16:35:48.637254 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 16:35:52.544029 ::INFO:: Sending request: getPos / param= / evt=
+2017-06-16 16:36:02.544796 ::ERROR:: Some error occurred when try to send 'getPos' request
+2017-06-16 16:36:02.545798 ::ERROR:: timed out
+2017-06-16 16:36:05.649647 ::ERROR:: Some error occurred when try to send 'getPos' request
+2017-06-16 16:36:05.650647 ::ERROR:: [WinError 10038] 嘗試操作的對象不是通訊端。
+2017-06-16 16:36:08.334554 ::ERROR:: Some error occurred when try to connect to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 16:36:22.788768 ::ERROR:: Some error occurred when try to connect to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 16:36:27.325671 ::ERROR:: Some error occurred when try to connect to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 16:36:35.851911 ::ERROR:: Some error occurred when try to connect to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 16:37:25.695061 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 16:38:40.733920 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-06-16 16:38:47.935547 ::INFO:: Sending request: getPos / param= / evt=
+2017-06-16 16:38:47.953558 ::INFO:: Receive robot Position (0.0521414615213871, 3.630000114440918, -1.979248046875)
+2017-06-16 16:38:55.915715 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 16:38:58.698691 ::INFO:: Sending request: getPos / param= / evt=
+2017-06-16 16:39:08.698696 ::ERROR:: Some error occurred when try to send 'getPos' request
+2017-06-16 16:39:08.700698 ::ERROR:: timed out
+2017-06-16 16:39:24.192202 ::ERROR:: Some error occurred when try to connect to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 16:39:24.195710 ::ERROR:: [WinError 10038] 嘗試操作的對象不是通訊端。
+2017-06-16 16:40:52.790065 ::ERROR:: Some error occurred when try to connect to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 16:40:52.791066 ::ERROR:: [WinError 10038] 嘗試操作的對象不是通訊端。
+2017-06-16 16:41:16.368911 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 5678
+2017-06-16 16:41:22.723424 ::INFO:: Sending request: getPos / param= / evt=
+2017-06-16 16:41:32.723745 ::ERROR:: Some error occurred when try to send 'getPos' request
+2017-06-16 16:41:32.725247 ::ERROR:: timed out

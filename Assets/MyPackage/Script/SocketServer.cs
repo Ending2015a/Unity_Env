@@ -14,8 +14,10 @@ class ServerThread{
 		public int port;
 	}
 
-	private Socket serverSocket;
-	private Socket clientSocket;
+	private TcpListener serverSocket = null;
+	//private Socket serverSocket;
+	private TcpClient clientSocket;
+	//private Socket clientSocket;
 	private Struct_Internet internet;
 	//public byte[] receiveMessage;
 	public Queue<byte> receiveMessage;
@@ -27,18 +29,18 @@ class ServerThread{
 	private bool isConnected = false;
 	private System.Object queuelock = new System.Object();
 
-	public ServerThread(AddressFamily family, SocketType socketType, ProtocolType protocolType, string ip, int port){
+	public ServerThread(/*AddressFamily family, SocketType socketType, ProtocolType protocolType,*/ string ip="127.0.0.1", int port=4567){
 
-		serverSocket = new Socket (family, socketType, protocolType);
+		//serverSocket = new Socket (family, socketType, protocolType);
 		internet.ip = ip;
 		internet.port = port;
-		receiveMessage = null;
-		serverSocket.Bind (new IPEndPoint (IPAddress.Parse (internet.ip), internet.port));
+		//serverSocket.Bind (new IPEndPoint (IPAddress.Parse (internet.ip), internet.port));
+		serverSocket = new TcpListener (IPAddress.Parse (internet.ip), internet.port);
 		receiveMessage = new Queue<byte> ();
 	}
 
 	public void Listen(){
-		serverSocket.Listen (1);
+		serverSocket.Start ();
 	}
 
 	public void StartConnect(){
@@ -49,8 +51,10 @@ class ServerThread{
 
 	public void StopConnect(){
 		try{
-			if(isConnected)
+			if(isConnected){
 				clientSocket.Close();
+			}
+			serverSocket.Stop();
 			isConnected = false;
 		}catch(Exception e){
 			Debug.LogError(e.ToString());
@@ -117,21 +121,22 @@ class ServerThread{
 
 	private void Accept(){
 		try{
-			clientSocket = serverSocket.Accept();
-			IPEndPoint client = clientSocket.RemoteEndPoint as IPEndPoint;
+			clientSocket = serverSocket.AcceptTcpClient();
+			IPEndPoint client = clientSocket.Client.RemoteEndPoint as IPEndPoint;
 			LogWriter.Log ("Client Connect: " + client.Address + ":" + client.Port);
 			Debug.Log("Client Connect: " + client.Address + ":" + client.Port);
 			isConnected = true;
-		}catch(Exception){
-			LogWriter.Error ("Client Connection Error");
-			Debug.LogError ("Client Connection Error");
+		}catch(Exception e){
+			LogWriter.Error ("Client Connection Error: " + e.ToString());
+			Debug.LogError ("Client Connection Error: " + e.ToString());
 		}
 	}
 
 	private void SendMessage(){
 		try{
 			if(clientSocket.Connected == true){
-				clientSocket.Send(sendMessage);
+				clientSocket.GetStream().Write(sendMessage, 0, sendMessage.Length);
+				//clientSocket.GetStream.write(sendMessage);
 			}else{
 				throw new Exception("Connection Error : Client Socket Connection: " + clientSocket.Connected + "/n/t in SendMessage");
 			}
@@ -143,17 +148,24 @@ class ServerThread{
 
 	private void ReceiveMessage(){  //receive data
 		if (clientSocket.Connected == true) {
-			byte[] bytes = new byte[1024];
+			byte[] bytes = new byte[clientSocket.ReceiveBufferSize];
+			try{
+				long dataLength = clientSocket.GetStream ().Read (bytes, 0, bytes.Length);
 
-			long dataLength = clientSocket.Receive (bytes);
-			byte[] recvmsg = new byte[dataLength];
+				//long dataLength = clientSocket.Receive (bytes);
+				byte[] recvmsg = new byte[dataLength];
 
-			Array.Copy (bytes, recvmsg, dataLength);
-			foreach (byte b in recvmsg) {
-				lock (queuelock) {
-					receiveMessage.Enqueue (b);
+				Array.Copy (bytes, recvmsg, dataLength);
+				foreach (byte b in recvmsg) {
+					lock (queuelock) {
+						receiveMessage.Enqueue (b);
+					}
 				}
+			}catch(Exception e){
+				LogWriter.Error ("Receive Error: " + e.ToString ());
+				Debug.LogException (e);
 			}
+
 			//receiveMessage = bytes;
 		}
 	}
@@ -178,7 +190,7 @@ public class SocketServer : MonoBehaviour {
 	}
 
 	void Start () {
-		st = new ServerThread (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp, ip, port);
+		st = new ServerThread (/*AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp,*/ ip, port);
 		st.Listen ();
 		st.StartConnect ();
 		parser = this.GetComponent<CommandParser> ();
@@ -186,7 +198,7 @@ public class SocketServer : MonoBehaviour {
 
 	public void Rebind(){
 		st.StopConnect ();
-		st = new ServerThread (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp, ip, port);
+		st = new ServerThread (/*AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp, */ip, port);
 		st.Listen ();
 		st.StartConnect ();
 	}
