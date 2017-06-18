@@ -103,34 +103,40 @@ public class CommandParser : MonoBehaviour {
 			this.transform.localRotation = Quaternion.Euler (new Vector3 (x, y, z));
 			return string.Format ("Set Rotation to ({0}, {1}, {2})", x, y, z);
 		} else if (cmd == 0x0b) { //getDepth
-			if(DepthCamera == null || sssdc == null)
+			if (DepthCamera == null || sssdc == null)
 				return "Get Depth failed";
 			//sssdc.ScreenShot ();
 			byte[] bytes = sssdc.getImage ().EncodeToPNG ();
 			server.Send (bytes.Length);
 			server.Send (bytes);
 			return "Get Depth";
-		} else if(cmd == 0x0c){ //setTimeScale
-			byte[] bytes = server.GetByte(4, true);
+		} else if (cmd == 0x0c) { //setTimeScale
+			byte[] bytes = server.GetByte (4, true);
 			float scale = BitConverter.ToSingle (bytes, 0);
 			optionPanel.TimeScale = scale;
 			return string.Format ("Set TimeScale to {0}", scale);
-		} else if(cmd == 0x0d){ //getTimeScale
+		} else if (cmd == 0x0d) { //getTimeScale
 			float scale = optionPanel.TimeScale;
 			byte[] buff = new byte[sizeof(float)];
 			Buffer.BlockCopy (BitConverter.GetBytes (scale), 0, buff, 0, 4);
 			server.Send (buff);
 			return "Get TimeScale";
-		} else if(cmd == 0x0e){ //setRandPos
-			optionPanel.OnRandPos();
+		} else if (cmd == 0x0e) { //setRandPos
+			optionPanel.OnRandPos ();
 			return "Set Random Position";
-		} else if(cmd == 0x0f){ //getSpherical
+		} else if (cmd == 0x0f) { //getSpherical
 			if (SphereCamera == null || ssssc == null)
 				return "Get Spherical failed";
 			byte[] bytes = ssssc.getImage ().EncodeToPNG ();
 			server.Send (bytes.Length);
 			server.Send (bytes);
 			return "Get Spherical";
+		} else if (cmd == 0x10) {  //closelog
+			optionPanel.EnableLog (false);
+			return "Close Log";
+		} else if(cmd == 0x10){ //openlog
+			optionPanel.EnableLog(true);
+			return "Open Log";
 		} else if (cmd == 0xff) {  //String
 			uint sz = command[1];
 			return server.GetString ((int)sz);

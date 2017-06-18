@@ -31,6 +31,7 @@ public class InitScript : MonoBehaviour {
 	[Header("UI Settings")]
 	public GameObject optionPanel;
 	public UnityEngine.UI.Text LogContent;
+	public UnityEngine.UI.Scrollbar vertical_bar;
 	public UnityEngine.UI.InputField timeScaleInput;
 	public UnityEngine.UI.Toggle cameraToggle;
 	public UnityEngine.UI.Toggle minimapToggle;
@@ -42,6 +43,7 @@ public class InitScript : MonoBehaviour {
 	public bool fixedminimap = false;
 	public bool showdepth = false;
 	public bool enablespherical = false;
+	public bool enablelog = true;
 
 	void Awake(){
 		robot = GameObject.Find(controller_name);
@@ -96,18 +98,23 @@ public class InitScript : MonoBehaviour {
 			optionPanel.SetActive(!optionPanel.activeSelf);
 		}
 
-		List<string> lists = LogWriter.getLogList ();
-		LogContent.text = "";
-		foreach (string str in lists) {
-			LogContent.text = LogContent.text + str; 
-		}
+		if(enablelog)
+			UpdateLog();
 
+		vertical_bar.value = 0;
 		posText.text = "Pos: " + robot.transform.localPosition;
 		rotText.text = "Rot: " + robot.transform.localEulerAngles;
 
 	}
 
 
+	public void UpdateLog(){
+		List<string> lists = LogWriter.getLogList ();
+		LogContent.text = "";
+		foreach (string str in lists) {
+			LogContent.text = LogContent.text + str; 
+		}
+	}
 
 	public void OnRestartServer(){
 		int portnum;
@@ -184,4 +191,8 @@ public class InitScript : MonoBehaviour {
 		LogWriter.Log (string.Format ("The robot has been transport to position {0}", pos.ToString ()));
 	}
 
+	public void EnableLog(bool b){
+		enablelog = b;
+		LogWriter.enablelog = b;
+	}
 }

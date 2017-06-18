@@ -249,6 +249,22 @@ class Controller(object):
 			self.logError(str(e))
 		return -1
 
+	def closeUnityLog(self):
+		try:
+			self.send(request='closelog')
+		except socket.error as e:
+			self.controller.close()
+			self.log.Error(low.REQUEST_ERROR.format('closeUnityLog'))
+			self.log.Error(str(e))
+
+	def openUnityLog(self):
+		try:
+			self.send(request='openlog')
+		except socket.error as e:
+			self.controller.close()
+			self.log.Error(low.REQUEST_ERROR.format('openUnityLog'))
+			self.log.Error(str(e))
+
 ######### Sending Event #########
 	def send(self, request, param='', evt=''):
 		if request == 'Close': #00
@@ -290,6 +306,10 @@ class Controller(object):
 			self.sendascii(chr(0x0e) + chr(0))
 		elif request == 'Spherical': #0f
 			self.sendascii(chr(0x0f) + chr(0))
+		elif request == 'closelog': #10
+			self.sendascii(chr(0x10) + chr(0))
+		elif request == 'openlog': #11
+			self.sendascii(chr(0x11) + chr(0))
 		elif request == 'S': #ff
 			self.sendascii(chr(0xff) + chr(len(param)))
 			self.controller.send(param.encode("UTF-8"))
