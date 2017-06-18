@@ -111,7 +111,7 @@ public class InitScript : MonoBehaviour {
 	public void UpdateLog(){
 		List<string> lists = LogWriter.getLogList ();
 		LogContent.text = "";
-		foreach (string str in lists) {
+		for (int i = 0; i < lists.Count; i++) {
 			LogContent.text = LogContent.text + str; 
 		}
 	}
