@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,8 @@ public class InitScript : MonoBehaviour {
 	private GameObject orthcam;
 	private GameObject depthcam;
 	private GameObject spherecam;
+	public GameObject pointPrefab;
+	public GameObject point;
 	//private Vector3 InitialPosition;
 	public UnityEngine.UI.Text posText;
 	public UnityEngine.UI.Text rotText;
@@ -89,6 +92,23 @@ public class InitScript : MonoBehaviour {
 		showDepth ();
 		timeScaleInput.text = Time.timeScale.ToString();
 		portInput.text = server.port.ToString();
+		//StreamWriter sr = File.CreateText ("hellotest.txt");
+		//sr.WriteLine (Application.persistentDataPath);
+		//sr.Close ();
+		GameObject obj = GameObject.Find("Point");
+		if (obj == null) {
+			point = Instantiate (pointPrefab, robot.transform.position, robot.transform.rotation);
+		} else {
+			point = obj;
+		}
+	}
+
+	void ReadSettings(){
+		
+	}
+
+	void WriteSettings(){
+		
 	}
 	
 	// Update is called once per frame
@@ -112,7 +132,7 @@ public class InitScript : MonoBehaviour {
 		List<string> lists = LogWriter.getLogList ();
 		LogContent.text = "";
 		for (int i = 0; i < lists.Count; i++) {
-			LogContent.text = LogContent.text + str; 
+			LogContent.text = LogContent.text + lists[i]; 
 		}
 	}
 

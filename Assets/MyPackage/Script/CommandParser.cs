@@ -134,9 +134,24 @@ public class CommandParser : MonoBehaviour {
 		} else if (cmd == 0x10) {  //closelog
 			optionPanel.EnableLog (false);
 			return "Close Log";
-		} else if(cmd == 0x10){ //openlog
-			optionPanel.EnableLog(true);
+		} else if (cmd == 0x11) { //openlog
+			optionPanel.EnableLog (true);
 			return "Open Log";
+		} else if (cmd == 0x12) {  //setPoint
+			byte[] bytes = server.GetByte (12, true);
+			float x = BitConverter.ToSingle (bytes, 0);
+			float y = BitConverter.ToSingle (bytes, 4);
+			float z = BitConverter.ToSingle (bytes, 8);
+			optionPanel.point.transform.position = new Vector3 (x, y, z);
+			return string.Format ("Set Point to ({0}, {1}, {2})", x, y, z);
+		} else if (cmd == 0x13) {  //getPoint
+			Vector3 pos = optionPanel.point.transform.position;
+			byte[] buff = new byte[sizeof(float) * 3];
+			Buffer.BlockCopy (BitConverter.GetBytes (pos.x), 0, buff, 0, 4);
+			Buffer.BlockCopy (BitConverter.GetBytes (pos.y), 0, buff, 4, 4);
+			Buffer.BlockCopy (BitConverter.GetBytes (pos.z), 0, buff, 8, 4);
+			server.Send (buff);
+			return "Get Point";
 		} else if (cmd == 0xff) {  //String
 			uint sz = command[1];
 			return server.GetString ((int)sz);

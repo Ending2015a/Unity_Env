@@ -20001,3 +20001,15 @@
 2017-06-18 22:21:59.774774 ::INFO:: Receive robot Position (0.052000001072883606, 3.630000114440918, -1.979248046875)
 2017-06-18 22:21:59.774774 ::INFO:: Sending request: getPos / param= / evt=
 2017-06-18 22:21:59.792052 ::INFO:: Receive robot Position (0.052000001072883606, 3.630000114440918, -1.979248046875)
+2017-06-23 13:42:56.295809 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-06-23 13:43:08.063470 ::INFO:: Sending request: getPoint / param= / evt=
+2017-06-23 13:43:18.063649 ::ERROR:: Some error occurred when try to send 'getPoint' request
+2017-06-23 13:43:18.064653 ::ERROR:: timed out
+2017-06-23 13:46:02.264076 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-06-23 13:46:59.391853 ::INFO:: Connecting to server: ip = 127.0.0.1 / port = 4567
+2017-06-23 13:47:06.831513 ::INFO:: Sending request: getPoint / param= / evt=
+2017-06-23 13:47:06.837991 ::INFO:: Receive Point (0.05214150995016098, 3.646773338317871, -1.9792462587356567)
+2017-06-23 13:47:29.223366 ::INFO:: Sending request: getPoint / param= / evt=
+2017-06-23 13:47:29.223866 ::INFO:: Receive Point (0.05214150995016098, 3.646773338317871, -1.9792462587356567)
+2017-06-23 13:47:58.551586 ::INFO:: Sending request: setPos / param=[0.05214, 3.6545, -6.3392] / evt=
+2017-06-23 13:48:13.039473 ::INFO:: Sending request: setPoint / param=[0.05214, 3.6545, -6.3392] / evt=

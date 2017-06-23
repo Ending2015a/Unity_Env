@@ -199,6 +199,7 @@ class Controller(object):
 			self.log.Error(logw.REQUEST_ERROR.format('getRot'))
 			self.log.Error(str(e))
 
+
 	def setRot(self, vec):
 		try:
 			self.setRot(vec[0], vec[1], vec[2])
@@ -224,6 +225,35 @@ class Controller(object):
 			self.log.Error(low.REQUEST_ERROR.format('setRandPos'))
 			self.log.Error(str(e))
 
+	def getPoint(self):
+		try:
+			self.send(request='getPoint')
+			bt = self.controller.recv(12)
+			(x,y,z) = struct.unpack('fff', bt)
+			self.log.Log('Receive Point ({0}, {1}, {2})'.format(x,y,z))
+			return x,y,z
+		except socket.error as e:
+			self.controller.close()
+			self.log.Error(logw.REQUEST_ERROR.format('getPoint'))
+			self.log.Error(str(e))
+		return -1
+
+	def setPoint(self, vec):
+		try:
+			self.setPoint(vec[0], vec[1], vec[2])
+		except IndexError:
+			print('Index Error in function setPoint(vec)\n')
+			self.log.Error('Index Error in function setPoint(vec)')
+			print('\tvec must contain at least 3 numbers\n')
+			self.log.Error('vec must contain at least 3 numbers')
+
+	def setPoint(self, x, y, z):
+		try:
+			self.send(request='setPoint', param=[x, y, z])
+		except socket.error as e:
+			self.controller.close()
+			self.log.Error(low.REQUEST_ERROR.format('setPoint'))
+			self.log.Error(str(e))
 
 ######### Other Option #########
 
@@ -310,6 +340,11 @@ class Controller(object):
 			self.sendascii(chr(0x10) + chr(0))
 		elif request == 'openlog': #11
 			self.sendascii(chr(0x11) + chr(0))
+		elif request == 'setPoint': #12
+			self.sendascii(chr(0x12) + chr(0))
+			self.controller.send(struct.pack('fff', param[0], param[1], param[2]))
+		elif request == 'getPoint': #13
+			self.sendascii(chr(0x13) + chr(0))
 		elif request == 'S': #ff
 			self.sendascii(chr(0xff) + chr(len(param)))
 			self.controller.send(param.encode("UTF-8"))
