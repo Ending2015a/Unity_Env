@@ -80,6 +80,13 @@ public class InitScript : MonoBehaviour {
 		} else {
 			server = server_obj.GetComponent<SocketServer> ();
 		}
+		Screen.SetResolution(1280, 768, false);
+		string[] names = QualitySettings.names;
+		for (int i = 0; i < names.Length; i++) {
+			if (names [i] == "Simple") {
+				QualitySettings.SetQualityLevel (i);
+			}
+		}
 
 		//InitialPosition = robot.transform.position;
 	}
