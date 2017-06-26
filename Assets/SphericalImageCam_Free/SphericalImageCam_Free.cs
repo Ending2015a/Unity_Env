@@ -45,12 +45,8 @@ public class SphericalImageCam_Free : MonoBehaviour {
 
 	void Awake() {
 		if(shader == null) {
-			//shader = Resources.Load<Shader>("SphericalShader");
 		}
 		shader = Shader.Find ("Hidden/SphericalShader");
-		//defaultshader = new Material(Shader.Find("Custom/DefaultRenderShader"));
-		//defaultNearPlane = this.GetComponent<Camera> ().nearClipPlane;
-		//defaultFarPlane = this.GetComponent<Camera> ().farClipPlane;
 	}
 
 	void Start() {

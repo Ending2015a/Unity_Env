@@ -7,14 +7,14 @@ public class ScreenshotScript : MonoBehaviour {
 
 
 	private Camera cam;
-	public int Width;
-	public int Height;
+	private int Width;
+	private int Height;
 	public bool useDefaultSize;
+	private RenderTexture sc = null;
 
 
 	private Texture2D newTex;
 	private bool shotting = false;
-	//private RenderTexture target;
 
 	// Use this for initialization
 	void Awake () {
@@ -26,13 +26,17 @@ public class ScreenshotScript : MonoBehaviour {
 			Width = Screen.width;
 			Height = Screen.height;
 		}
+
+		if (sc == null) {
+			sc = new RenderTexture (Width, Height, 24); 
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (InputManager.GetKeyDown (KeyCode.Z)) {
-			ScreenShot ();
-		}
+		//if (InputManager.GetKeyDown (KeyCode.Z)) {
+		//	ScreenShot ();
+		//}
 	}
 
 	private static string ScreenShotName(int Width, int Height){
@@ -52,7 +56,6 @@ public class ScreenshotScript : MonoBehaviour {
 		
 		if (!shotting) {
 			shotting = true;
-			RenderTexture sc = new RenderTexture (Width, Height, 24);
 			cam.targetTexture = sc;
 			Texture2D screenShot = new Texture2D (Width, Height, TextureFormat.RGB24, false);
 			cam.Render ();
@@ -60,9 +63,8 @@ public class ScreenshotScript : MonoBehaviour {
 			screenShot.ReadPixels (new Rect (0, 0, Width, Height), 0, 0);
 			cam.targetTexture = null;
 			RenderTexture.active = null;
-			Destroy (sc);
 			newTex = screenShot;
-
+			Destroy (screenShot);
 			shotting = false;
 		}
 		return newTex;
