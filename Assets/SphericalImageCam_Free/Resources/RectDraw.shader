@@ -1,4 +1,6 @@
-﻿//RectDraw.shader
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+//RectDraw.shader
 //
 //Copyright (c) 2015 Tatsuro Matsubara
 //SphericalImageCam_Free is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
@@ -43,7 +45,7 @@ Shader "Hidden/RectDraw"
 			v2f vert (appdata v)
 			{
 				v2f o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				//o.vertex.x = o.vertex.x * _Scale.x + _Position.x;
 				//o.vertex.y = o.vertex.y * _Scale.y + _Position.y;
 
